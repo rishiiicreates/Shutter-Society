@@ -34,9 +34,6 @@ export const BehindTheEdit = () => {
 
       // Scrub video
       if (videoRef.current) {
-        // Fallback duration if metadata not loaded
-        const vidDuration = videoRef.current.duration && !isNaN(videoRef.current.duration) ? videoRef.current.duration : 10;
-        
         // Use loadedmetadata event to ensure exact duration
         videoRef.current.onloadedmetadata = () => {
           gsap.to(videoRef.current, {
@@ -54,7 +51,7 @@ export const BehindTheEdit = () => {
         // Initialize just in case metadata is already loaded
         if (videoRef.current.readyState >= 1) {
           gsap.to(videoRef.current, {
-            currentTime: videoRef.current.duration,
+            currentTime: videoRef.current.duration || 10,
             ease: "none",
             scrollTrigger: {
               trigger: sectionRef.current,
